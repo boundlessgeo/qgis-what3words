@@ -24,10 +24,12 @@ from qgiscommons2.gui import (addAboutMenu,
                              removeAboutMenu,
                              addHelpMenu,
                              removeHelpMenu)
-from qgiscommons2.settings import (readSettings,
-                                  pluginSetting,
+from qgiscommons2.gui.settings import (
                                   addSettingsMenu,
                                   removeSettingsMenu)
+from qgiscommons2.settings import (readSettings,
+                                  pluginSetting
+                                  )
 
 try:
     from processing.core.Processing import Processing
