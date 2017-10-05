@@ -5,6 +5,8 @@ from builtins import str
 # This code is licensed under the GPL 2.0 license.
 #
 
+from w3w import what3words
+
 from qgis.PyQt.QtCore import Qt
 from qgis.PyQt.QtWidgets import (QDockWidget,
                                  QLabel,

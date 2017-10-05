@@ -43,9 +43,10 @@ class W3WMapTool(QgsMapTool):
     def canvasReleaseEvent(self, e):
         pt = self.toMapCoordinates(e.pos())
         w3wCoord = self.toW3W(pt)
+        address = "http://w3w.co/"+w3wCoord
         if w3wCoord:
-            iface.messageBar().pushMessage("what3words", "The 3 word address: '{}' has been copied to the clipboard".format(w3wCoord), level=QgsMessageBar.INFO, duration=6)
+            iface.messageBar().pushMessage("what3words", u"The 3 word address: '"+address+"' has been copied to the clipboard", level=QgsMessageBar.INFO, duration=6)
             clipboard = QApplication.clipboard()
-            clipboard.setText(w3wCoord)
+            clipboard.setText(address)
         else:
             iface.messageBar().pushMessage("what3words", "Could not convert the selected point to a 3 word address", level=QgsMessageBar.WARNING, duration=3)

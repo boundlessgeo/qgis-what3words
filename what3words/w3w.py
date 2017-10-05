@@ -35,13 +35,13 @@ class what3words(object):
         self.apikey = apikey
         self.nam = NetworkAccessManager()
 
-    def forwardGeocode(self, words='index.home.raft', lang='en'):
+    def forwardGeocode(self, words='index.home.raft', lang='de'):
         if isinstance(words, list):
             words = "%s.%s.%s" % (words[0], words[1], words[2])
         params = {'addr':words, 'display':'full', 'format':'json', 'lang':lang}
         return self.postRequest(self.host + '/v2/forward', params)
 
-    def reverseGeocode(self, lat='', lng='', corners='false', lang='en'):
+    def reverseGeocode(self, lat='', lng='', corners='false', lang='de'):
         coords = "%s,%s" % (lat, lng)
         params = {'coords':coords, 'display':'full', 'format':'json', 'lang':lang}
         return self.postRequest(self.host + '/v2/reverse', params)
