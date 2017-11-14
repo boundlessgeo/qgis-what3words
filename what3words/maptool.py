@@ -43,8 +43,8 @@ class W3WMapTool(QgsMapTool):
     def canvasReleaseEvent(self, e):
         pt = self.toMapCoordinates(e.pos())
         w3wCoord = self.toW3W(pt)
-        address = "http://w3w.co/"+w3wCoord
         if w3wCoord:
+            address = "http://w3w.co/"+w3wCoord
             iface.messageBar().pushMessage("what3words", u"The 3 word address: '"+address+"' has been copied to the clipboard", level=QgsMessageBar.INFO, duration=6)
             clipboard = QApplication.clipboard()
             clipboard.setText(address)
