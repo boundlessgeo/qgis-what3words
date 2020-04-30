@@ -30,11 +30,16 @@ class W3WMapTool(QgsMapTool):
         canvasCrs = canvas.mapSettings().destinationCrs()
         transform = QgsCoordinateTransform(canvasCrs, self.epsg4326, QgsProject.instance())
         pt4326 = transform.transform(pt.x(), pt.y())
+
+        apiKey = pluginSetting("apiKey")
+        addressLanguage = pluginSetting("addressLanguage")
+        self.w3w = what3words(apikey=apiKey,addressLanguage=addressLanguage)
+        
         try:
             QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-            w3wCoords = self.w3w.reverseGeocode(pt4326.y(), pt4326.x())["words"]
+            w3wCoords = self.w3w.convertTo3wa(pt4326.y(), pt4326.x())["words"]
         except Exception as e :
-            w3wCoords = None
+            w3wCoords = str(e)
         finally:
             QApplication.restoreOverrideCursor()
 
@@ -51,5 +56,5 @@ class W3WMapTool(QgsMapTool):
             clipboard.setText(w3wCoord)
         else:
             iface.messageBar().pushMessage("what3words", 
-                "Could not convert the selected point to a 3 word address", 
+                "Could not convert the selected point to a 3 word address",
                 level=Qgis.Warning, duration=3)

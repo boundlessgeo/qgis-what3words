@@ -8,7 +8,7 @@ import os
 from qgis.PyQt.QtGui import QIcon
 
 from qgis.core import QgsProcessingProvider
-
+ 
 from processing.core.ProcessingConfig import Setting, ProcessingConfig
 from what3words.processingprovider.add3wordsfield import Add3WordsFieldAlgorithm
 

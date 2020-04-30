@@ -28,21 +28,22 @@ from qgiscommons2.network.networkaccessmanager import NetworkAccessManager
 class what3words(object):
     """what3words API"""
 
-    def __init__(self, host='api.what3words.com', apikey=''):
+    def __init__(self, host='api.what3words.com', apikey='', addressLanguage=''):
         self.host = 'https://' + host
         self.apikey = apikey
+        self.addressLanguage = addressLanguage
         self.nam = NetworkAccessManager()
-
-    def forwardGeocode(self, words='index.home.raft', lang='en'):
+		
+    def convertToCordinates(self, words='index.home.raft', lang='en'):
         if isinstance(words, list):
             words = "%s.%s.%s" % (words[0], words[1], words[2])
-        params = {'addr':words, 'display':'full', 'format':'json', 'lang':lang}
-        return self.postRequest(self.host + '/v2/forward', params)
+        params = {'words':words, 'format':'json', 'language':self.addressLanguage}
+        return self.postRequest(self.host + '/v3/convert-to-coordinates', params)
 
-    def reverseGeocode(self, lat='', lng='', corners='false', lang='en'):
+    def convertTo3wa(self, lat='', lng='', lang='en'):
         coords = "%s,%s" % (lat, lng)
-        params = {'coords':coords, 'display':'full', 'format':'json', 'lang':lang}
-        return self.postRequest(self.host + '/v2/reverse', params)
+        params = {'coordinates':coords, 'format':'json', 'language':self.addressLanguage}
+        return self.postRequest(self.host + '/v3/convert-to-3wa', params)		
 
     def getLanguages(self):
         return self.postRequest(self.host + '/v2/languages', dict())

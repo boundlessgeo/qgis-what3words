@@ -36,6 +36,9 @@ class W3WCoordInputDialog(QDockWidget):
 
     def setApiKey(self, apikey):
         self.w3w = what3words(apikey=apikey)
+		
+    def setAddressLanguage(self, addressLanguage):
+        self.w3w = what3words(addressLanguage=addressLanguage)
 
     def initGui(self):
         self.setWindowTitle("Zoom to 3 word address")
@@ -62,9 +65,9 @@ class W3WCoordInputDialog(QDockWidget):
         try:
             w3wCoord = str(self.coordBox.text()).replace(" ", "")
             QApplication.setOverrideCursor(QCursor(Qt.WaitCursor))
-            json = self.w3w.forwardGeocode(w3wCoord)
-            lat = float(json["geometry"]["lat"])
-            lon = float(json["geometry"]["lng"])
+            json = self.w3w.convertToCordinates(w3wCoord)
+            lat = float(json["coordinates"]["lat"])
+            lon = float(json["coordinates"]["lng"])
             canvasCrs = self.canvas.mapSettings().destinationCrs()
             epsg4326 = QgsCoordinateReferenceSystem("EPSG:4326")
             transform4326 = QgsCoordinateTransform(epsg4326, canvasCrs, QgsProject.instance())

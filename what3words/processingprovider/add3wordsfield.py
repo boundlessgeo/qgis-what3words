@@ -56,7 +56,8 @@ class Add3WordsFieldAlgorithm(QgisAlgorithm):
         field = QgsField("w3w", QVariant.String)
         fields.append(field)
         apiKey = pluginSetting("apiKey")
-        w3w = what3words(apikey=apiKey)
+        addressLanguage = pluginSetting("addressLanguage")
+        w3w = what3words(apikey=apiKey,addressLanguage=addressLanguage)
         (sink, dest_id) = self.parameterAsSink(parameters, self.OUTPUT, context,
                                                fields, source.wkbType(), source.sourceCrs())
 
@@ -75,7 +76,7 @@ class Add3WordsFieldAlgorithm(QgisAlgorithm):
             pt = feat.geometry().centroid().asPoint()
             try:
                 pt4326 = transform.transform(pt.x(), pt.y())
-                threeWords = w3w.reverseGeocode(pt4326.y(), pt4326.x())["words"]
+                threeWords = w3w.convertTo3wa(pt4326.y(), pt4326.x())["words"]
             except Exception as e:
                 progress.setDebugInfo("Failed to retrieve w3w address for feature {}:\n{}".format(feat.id(), str(e)))
                 threeWords = ""

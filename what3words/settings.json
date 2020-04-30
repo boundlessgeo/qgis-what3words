@@ -5,5 +5,12 @@
      "type": "string",
      "default": "",
      "group": "General"
+    },
+	{"name":"addressLanguage",
+     "label": "what3words address language (2 Digit language code)",
+     "description": "what3words address language (2 Digit language code)",
+     "type": "string",
+     "default": "EN",
+     "group": "General"
     }
 ]
